@@ -1,0 +1,21 @@
+{
+    "name": "cydrickn/event-store-dbal",
+    "description": "Event Store Implementation for Doctrine DBAL",
+    "type": "library",
+    "require": {
+        "cydrickn/ddd-common": "^1.0",
+        "doctrine/dbal": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cydrickn\\EventStore\\Dbal\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cydrick Nonog",
+            "email": "cydrick.dev@gmail.com"
+        }
+    ]
+}
