@@ -88,9 +88,10 @@ class DbalEventStore implements TransactionalEventStoreInterface
     {
         $queryBuilder = $this
             ->createQueryBuilder($streamName->toString(), 's')
-            ->andWhere('s.playhead = :playhead')
+            ->andWhere('s.playhead >= :playhead')
             ->orderBy('s.recorded_on', 'ASC')
-            ->addOrderBy('s.playhead', 'ASC');
+            ->addOrderBy('s.playhead', 'ASC')
+            ->setParameter('playhead', $playhead);
 
         if ($count !== null) {
             $queryBuilder->setMaxResults($count);
