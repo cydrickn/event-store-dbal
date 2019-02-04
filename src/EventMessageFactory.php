@@ -16,13 +16,22 @@ class EventMessageFactory
 {
     public static function createMessageFromArray(array $record): EventMessage
     {
-        $class = strtr(get_class($record['type']), '.', '\\');
+        $class = strtr($record['type'], '.', '\\');
+        $payload = $record['payload'];
+        if (is_string($payload)) {
+            $payload = json_decode($payload, true);
+        }
+        $metadata = $record['metadata'];
+        if (is_string($metadata)) {
+            $metadata = json_decode($metadata, true);
+        }
+
         $message = new EventMessage(
             $record['id'],
             $record['aggregate_id'],
-            $record['playhead'],
-            new EventMeta($record['metadata']),
-            $class::deserialize($record['payload']),
+            (int) $record['playhead'],
+            new EventMeta($metadata),
+            $class::deserialize($payload),
             \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $record['recorded_on'], new \DateTimeZone('UTC'))
         );
 
